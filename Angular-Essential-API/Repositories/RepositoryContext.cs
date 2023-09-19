@@ -19,6 +19,7 @@ namespace Angular_Essential_API.Repositories
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new UserRoleSeed());
+            builder.ApplyConfiguration(new MovieSeed());
         }
     }
 }

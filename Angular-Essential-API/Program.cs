@@ -26,10 +26,10 @@ namespace Angular_Essential_API
             {
                 option.AddPolicy("EnableCORS", builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder
+                    .AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod();
-
                 });
             });
 
@@ -46,6 +46,7 @@ namespace Angular_Essential_API
 
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IMovieService, MovieServices>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -60,7 +61,7 @@ namespace Angular_Essential_API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            app.UseCors("EnableCORS");
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
