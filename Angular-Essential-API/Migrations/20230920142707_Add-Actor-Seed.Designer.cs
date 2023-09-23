@@ -4,6 +4,7 @@ using Angular_Essential_API.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Angular_Essential_API.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20230920142707_Add-Actor-Seed")]
+    partial class AddActorSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,48 +25,62 @@ namespace Angular_Essential_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Angular_Essential_API.Models.Cost", b =>
+            modelBuilder.Entity("ActorMovie", b =>
+                {
+                    b.Property<Guid>("MovieId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MoviesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("MovieId", "MoviesId");
+
+                    b.HasIndex("MoviesId");
+
+                    b.ToTable("ActorMovie");
+                });
+
+            modelBuilder.Entity("Angular_Essential_API.Models.Actor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("MovieID")
+                    b.Property<Guid>("MovieId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MovieID");
-
-                    b.ToTable("Costs");
+                    b.ToTable("Actor");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2f0e1e03-9438-4d46-9809-5f530ca12348"),
-                            Amount = 145254.25m,
-                            MovieID = new Guid("06f158fe-277f-469b-adb3-878e3ec53e63")
+                            Id = new Guid("2f0e1e03-9438-4d46-9809-5f530ca9193b"),
+                            MovieId = new Guid("06f158fe-277f-469b-adb3-878e3ec53e63"),
+                            Name = "Nicolas Cage"
                         },
                         new
                         {
-                            Id = new Guid("2f0e1e03-9438-4d46-9809-5f530ca12347"),
-                            Amount = 154785441.22m,
-                            MovieID = new Guid("06f158fe-277f-469b-adb3-878e3ec53e63")
+                            Id = new Guid("318756e3-08af-472b-baa7-8506f8921f26"),
+                            MovieId = new Guid("06f158fe-277f-469b-adb3-878e3ec53e63"),
+                            Name = "John Travolta"
                         },
                         new
                         {
-                            Id = new Guid("2f0e1e03-9438-4d46-9809-5f530ca12346"),
-                            Amount = 1500.00m,
-                            MovieID = new Guid("c8a235b0-0764-49c5-b930-74ec0951c388")
+                            Id = new Guid("965fa160-3c70-4a8b-a6cf-9c3a449b1601"),
+                            MovieId = new Guid("e01976fe-6f54-4197-bcb6-0e4c79b173a1"),
+                            Name = "Alpacino"
                         },
                         new
                         {
-                            Id = new Guid("2f0e1e03-9438-4d46-9809-5f530ca12345"),
-                            Amount = 13254784.00m,
-                            MovieID = new Guid("c40dea06-64c2-4e32-b1be-66de42062ec2")
+                            Id = new Guid("40671866-d43d-4f5d-9d6b-9c844e53c671"),
+                            MovieId = new Guid("e01976fe-6f54-4197-bcb6-0e4c79b173a1"),
+                            Name = "Robert Deniro"
                         });
                 });
 
@@ -347,15 +364,19 @@ namespace Angular_Essential_API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Angular_Essential_API.Models.Cost", b =>
+            modelBuilder.Entity("ActorMovie", b =>
                 {
-                    b.HasOne("Angular_Essential_API.Models.Movie", "Movie")
-                        .WithMany("Costs")
-                        .HasForeignKey("MovieID")
+                    b.HasOne("Angular_Essential_API.Models.Actor", null)
+                        .WithMany()
+                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Movie");
+                    b.HasOne("Angular_Essential_API.Models.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -407,11 +428,6 @@ namespace Angular_Essential_API.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Angular_Essential_API.Models.Movie", b =>
-                {
-                    b.Navigation("Costs");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,5 +9,6 @@ namespace Angular_Essential_API.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public DateTime ReleaseDate { get; set; }
+        public virtual ICollection<Cost> Costs { get; set; }
     }
 }

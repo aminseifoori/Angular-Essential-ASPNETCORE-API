@@ -25,13 +25,15 @@ namespace Angular_Essential_API.Service
 
         public async Task<List<Movie>> GetAllMoviesAsync()
         {
-            var movies = await context.Movies.AsNoTracking().ToListAsync();
+            var movies = await context.Movies
+                .AsNoTracking()
+                .ToListAsync();
             return movies;
         }
 
         public async Task<Movie> GetMovieAsync(Guid id)
         {
-            var movie = await context.Movies.FirstOrDefaultAsync(x => x.Id == id);
+            var movie = await context.Movies.Include(x=> x.Costs).FirstOrDefaultAsync(x => x.Id == id);
             return movie;
         }
 

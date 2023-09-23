@@ -13,6 +13,7 @@ namespace Angular_Essential_API.Repositories
         }
 
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Cost> Costs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -20,6 +21,8 @@ namespace Angular_Essential_API.Repositories
 
             builder.ApplyConfiguration(new UserRoleSeed());
             builder.ApplyConfiguration(new MovieSeed());
+            builder.ApplyConfiguration(new CostSeed());
+
         }
     }
 }
