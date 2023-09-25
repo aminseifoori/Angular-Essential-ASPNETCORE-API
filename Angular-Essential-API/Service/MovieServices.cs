@@ -1,6 +1,8 @@
-﻿using Angular_Essential_API.Models;
+﻿using Angular_Essential_API.Dtos;
+using Angular_Essential_API.Models;
 using Angular_Essential_API.Repositories;
 using Angular_Essential_API.ServiceInterface;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace Angular_Essential_API.Service
@@ -8,14 +10,19 @@ namespace Angular_Essential_API.Service
     public class MovieServices : IMovieService
     {
         private readonly RepositoryContext context;
+        private readonly IMapper mapper;
 
-        public MovieServices(RepositoryContext context)
+        public MovieServices(RepositoryContext context, IMapper _mapper)
         {
             this.context = context;
+            mapper = _mapper;
         }
-        public void CreateMovie(Movie movie)
+        public async Task<Movie> CreateMovie(CreateMovieDto movie)
         {
-            throw new NotImplementedException();
+            Movie newMovie = mapper.Map<Movie>(movie);
+            await context.Movies.AddAsync(newMovie);
+            await context.SaveChangesAsync();
+            return newMovie;
         }
 
         public void DeleteMovie(Movie movie)

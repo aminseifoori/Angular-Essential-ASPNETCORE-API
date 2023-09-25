@@ -10,6 +10,7 @@ namespace Angular_Essential_API
         public MappingProfile() 
         {
             CreateMap<User, CreateUserDto>().ReverseMap();
+            CreateMap<Movie, CreateMovieDto>().ReverseMap();
         }
 
     }

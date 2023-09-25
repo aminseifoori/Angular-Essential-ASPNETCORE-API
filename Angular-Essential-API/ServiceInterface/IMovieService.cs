@@ -1,4 +1,5 @@
-﻿using Angular_Essential_API.Models;
+﻿using Angular_Essential_API.Dtos;
+using Angular_Essential_API.Models;
 
 namespace Angular_Essential_API.ServiceInterface
 {
@@ -6,7 +7,7 @@ namespace Angular_Essential_API.ServiceInterface
     {
         Task<List<Movie>> GetAllMoviesAsync();
         Task<Movie> GetMovieAsync(Guid id);
-        void CreateMovie(Movie movie);
+        Task<Movie> CreateMovie(CreateMovieDto movie);
         void DeleteMovie(Movie movie);
     }
 }
