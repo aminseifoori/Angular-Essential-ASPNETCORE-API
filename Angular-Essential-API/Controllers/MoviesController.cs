@@ -40,5 +40,23 @@ namespace Angular_Essential_API.Controllers
             }
             return new UnprocessableEntityObjectResult(ModelState);
         }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateMovie([FromBody] UpdateMovieDto updateMovie, Guid id)
+        {
+            if(ModelState.IsValid)
+            {
+                await service.UpdateMovie(updateMovie, id);
+                return NoContent();
+            }
+            return new UnprocessableEntityObjectResult(ModelState);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteMovie(Guid id)
+        {
+            await service.DeleteMovie(id);
+            return NoContent();
+        }
     }
 }

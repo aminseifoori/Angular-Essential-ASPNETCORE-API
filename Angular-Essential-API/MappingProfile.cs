@@ -11,6 +11,7 @@ namespace Angular_Essential_API
         {
             CreateMap<User, CreateUserDto>().ReverseMap();
             CreateMap<Movie, CreateMovieDto>().ReverseMap();
+            CreateMap<Movie, UpdateMovieDto>().ReverseMap();
         }
 
     }

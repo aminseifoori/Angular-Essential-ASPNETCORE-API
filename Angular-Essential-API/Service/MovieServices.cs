@@ -25,9 +25,11 @@ namespace Angular_Essential_API.Service
             return newMovie;
         }
 
-        public void DeleteMovie(Movie movie)
+        public async Task DeleteMovie(Guid id)
         {
-            throw new NotImplementedException();
+            var movie = await context.Movies.FindAsync(id);
+            context.Movies.Remove(movie);
+            await context.SaveChangesAsync();
         }
 
         public async Task<List<Movie>> GetAllMoviesAsync()
@@ -43,6 +45,14 @@ namespace Angular_Essential_API.Service
             var movie = await context.Movies.Include(x=> x.Costs).FirstOrDefaultAsync(x => x.Id == id);
             return movie;
         }
+
+        public async Task UpdateMovie(UpdateMovieDto movie, Guid id)
+        {
+            var existMovie = await context.Movies.FindAsync(id);
+            mapper.Map(movie, existMovie);
+            await context.SaveChangesAsync();
+        }
+
 
     }
 }
