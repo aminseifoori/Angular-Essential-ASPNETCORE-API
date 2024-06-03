@@ -78,6 +78,13 @@ namespace Angular_Essential_API
 
             app.MapControllers();
 
+            // Redirect root URL to Swagger
+            app.MapGet("/", context =>
+            {
+                context.Response.Redirect("/swagger");
+                return Task.CompletedTask;
+            });
+
             app.Run();
         }
     }
