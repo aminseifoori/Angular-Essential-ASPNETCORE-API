@@ -23,12 +23,13 @@ namespace Angular_Essential_API
                 .AddJsonFile($"appsettings.{env}.json", true, true);
 
             // Add services to the container.
+
             builder.Services.AddCors(option =>
             {
                 option.AddPolicy("EnableCORS", builder =>
                 {
                     builder
-                    .AllowAnyOrigin()
+                    .WithOrigins("http://localhost:4200")
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });
@@ -64,10 +65,12 @@ namespace Angular_Essential_API
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseCors("EnableCORS");
             }
-            app.UseCors("EnableCORS");
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
